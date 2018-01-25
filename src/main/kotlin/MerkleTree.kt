@@ -1,19 +1,25 @@
 class MerkleTree(text: String) {
 
+    private val rootNode: Node
+
     init {
         val leafList = text.lines().map { Leaf(it) }
-        buildTree(leafList)
+        rootNode = buildTree(leafList)
     }
 
-    private fun buildTree(leafList: List<Leaf>) {
+    private fun buildTree(leafList: List<Leaf>): Node {
         val treeDepth = getTreeDepth(leafList.size)
 
         val splitList = leafList.splitList()
+        return Computed(splitList.first, splitList.second)
+    }
 
-        val rootNode = Computed(splitList.first, splitList.second)
-
-        println(rootNode.getHash())
-        println(rootNode)
+    fun compareTrees(merkleTree: MerkleTree) {
+        if(this.rootNode.getHash() == merkleTree.rootNode.getHash()) {
+            print("same")
+        } else {
+            this.rootNode.compareChildren(merkleTree.rootNode)
+        }
     }
 
     private fun getTreeDepth(numberOfLines: Int): Int {

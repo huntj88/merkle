@@ -1,11 +1,23 @@
 interface Node {
 
     fun getHash(): String
+    fun compareChildren(nodeFromOtherTree: Node)
 }
 
 class Leaf(private val lineOfText: String) : Node {
     override fun getHash(): String {
         return lineOfText.hash()
+    }
+
+    override fun compareChildren(nodeFromOtherTree: Node) {
+        if(nodeFromOtherTree is Leaf) {
+            if(this.lineOfText != nodeFromOtherTree.lineOfText)
+                println("line of text different: ${nodeFromOtherTree.lineOfText} vs ${this.lineOfText}")
+
+        } else {
+            println("other node is not a leaf")
+            println(nodeFromOtherTree)
+        }
     }
 
     override fun toString(): String {
@@ -30,6 +42,25 @@ class Computed(leftLeaves: List<Leaf>, rightLeaves: List<Leaf>) : Node {
             Computed(splitForRightNode.first, splitForRightNode.second)
         } else {
             leaves.first()
+        }
+    }
+
+    override fun compareChildren(nodeFromOtherTree: Node) {
+
+        if(nodeFromOtherTree is Computed) {
+            if (this.leftChildNode.getHash() != nodeFromOtherTree.leftChildNode.getHash()) {
+                println("left node different")
+                this.leftChildNode.compareChildren(nodeFromOtherTree.leftChildNode)
+            }
+
+            if (this.rightChildNode.getHash() != nodeFromOtherTree.rightChildNode.getHash()) {
+                println("right node different")
+                this.rightChildNode.compareChildren(nodeFromOtherTree.rightChildNode)
+            }
+
+        } else {
+            println("other node is a leaf")
+            println(nodeFromOtherTree)
         }
     }
 

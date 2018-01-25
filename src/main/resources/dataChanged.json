@@ -1,0 +1,23 @@
+{
+  "firstName": "James",
+  "lastName": "Hunt",
+  "age": 24,
+  "city": "Austin",
+  "hobbies": [
+    {
+      "programming": {
+        "languages": [
+          "java",
+          "kotlin",
+          "others",
+          "english"
+        ],
+        "skillLevel": "scrub tier",
+        "desiredSkillLevel": "I wanna be the best"
+      }
+    },
+    "gloving",
+    "sleeping",
+    "cool stuff"
+  ]
+}
